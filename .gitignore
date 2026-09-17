@@ -1,0 +1,21 @@
+# Vercel
+.vercel/
+
+# Python (los scripts de tools/)
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editores
+.idea/
+*.swp
+
+# Herramientas locales
+.playwright-mcp/
+node_modules/

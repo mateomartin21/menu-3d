@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Menú · Aleida Café y Comida Confortable</title>
+<meta name="description" content="Menú interactivo de Aleida Café y Comida Confortable. Mira cada platillo en 3D y colócalo a tamaño real sobre tu mesa desde el celular.">
+<meta name="theme-color" content="#FDFBF7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#14120F" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="img/favicon.png" sizes="64x64">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Menú · Aleida Café y Comida Confortable">
+<meta property="og:description" content="Mira cada platillo en 3D y colócalo a tamaño real sobre tu mesa, sin instalar nada.">
+<meta property="og:image" content="img/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap">
+<link rel="stylesheet" href="styles.css">
+<script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer.min.js"></script>
+</head>
+<body>
+
+<a class="skip-link" href="#menu">Saltar al menú</a>
+
+<header class="hero">
+  <img class="hero__bg" src="img/hero.webp" alt="" width="1280" height="795" fetchpriority="high">
+  <div class="hero__veil"></div>
+  <div class="hero__content">
+    <img class="hero__logo" src="img/logo.webp" alt="Aleida · Café y Comida Confortable" width="560" height="560">
+    <p class="hero__eyebrow">Mérida, Yucatán</p>
+  </div>
+</header>
+
+<main class="sheet-paper">
+  <img class="floral floral--top" src="img/floral-top.webp" alt="" width="660" height="844" aria-hidden="true">
+  <img class="floral floral--left" src="img/floral-left.webp" alt="" width="380" height="327" aria-hidden="true">
+  <img class="floral floral--right" src="img/floral-right.webp" alt="" width="430" height="270" aria-hidden="true">
+
+  <div class="paper-inner">
+    <img class="wordmark" src="img/menu-script.webp" alt="Menú" width="760" height="295">
+    <p class="lede">Toca cualquier platillo para verlo en 3D — y desde tu celular, colócalo a tamaño real sobre tu mesa.</p>
+
+    <section id="menu" class="course" aria-labelledby="course-1">
+      <h2 class="course__title" id="course-1">Desayunos</h2>
+      <ul class="dishes" id="dishes-1"></ul>
+    </section>
+
+    <section class="course" aria-labelledby="course-2">
+      <h2 class="course__title" id="course-2">Platillos fuertes</h2>
+      <ul class="dishes" id="dishes-2"></ul>
+    </section>
+
+    <section class="gallery" aria-label="El lugar">
+      <h2 class="course__title">El lugar</h2>
+      <div class="gallery__grid">
+        <img src="img/hero.webp" alt="Terraza de Aleida al atardecer" width="1280" height="795" loading="lazy" decoding="async">
+        <img src="img/dish-cafe.webp" alt="Capuchino con arte latte servido en Aleida" width="820" height="820" loading="lazy" decoding="async">
+      </div>
+    </section>
+
+    <footer class="paper-foot">
+      <p><strong>Aleida</strong> · Café y Comida Confortable</p>
+      <p class="paper-foot__note">Prototipo de menú interactivo — Code Consulting</p>
+      <p class="paper-foot__note">Modelos 3D y algunas fotos son de referencia; se sustituyen por los platillos reales.</p>
+      <details class="credits">
+        <summary>Créditos de fotos de referencia</summary>
+        <p>Las fotos de hot cakes, chilaquiles, el capuchino y la terraza son de Aleida. Las demás son fotos de referencia de Wikimedia Commons, no son sus platillos:</p>
+        <ul>
+        <li>Omelette Aleida — Ewan Munro from London, UK, <a href="https://commons.wikimedia.org/wiki/File:Artillery_Arms,_St_Lukes,_London_(3599600661).jpg" target="_blank" rel="noopener">CC BY-SA 2.0</a></li>
+        <li>Omelette — HaJunkiyada, <a href="https://commons.wikimedia.org/wiki/File:Liat_Portal_for_Foodie_Disorder_-_Herb_Omelette_with_Israeli_Salad_and_Orange_Juice.jpg" target="_blank" rel="noopener">CC BY-SA 4.0</a></li>
+        <li>Huevos al gusto — Fer.goiba, <a href="https://commons.wikimedia.org/wiki/File:Feria_Gastronomica_de_la_Enchilada_49.jpg" target="_blank" rel="noopener">CC BY-SA 4.0</a></li>
+        <li>Huevos Motuleños — Hippietrail at English Wikipedia, <a href="https://commons.wikimedia.org/wiki/File:Huevos_rancheros_con_salsa.jpg" target="_blank" rel="noopener">CC BY 3.0</a></li>
+        <li>Variedad de pan dulce — ProtoplasmaKid, <a href="https://commons.wikimedia.org/wiki/File:Concha_de_vainilla_(pan_dulce_mexicano)_06.jpg" target="_blank" rel="noopener">CC BY-SA 4.0</a></li>
+        <li>Fajitas de pollo — Elisa Arteaga from Caracas, Venezuela, <a href="https://commons.wikimedia.org/wiki/File:Flickr_elisart_324248450--Beef_and_chicken_fajitas.jpg" target="_blank" rel="noopener">CC BY-SA 2.0</a></li>
+        <li>Pechuga empanizada — Eugene Alvin Villar (seav), <a href="https://commons.wikimedia.org/wiki/File:Chicken_schnitzel_from_Brotzeit.jpg" target="_blank" rel="noopener">CC BY-SA 4.0</a></li>
+        <li>Cordon bleu — Crisco 1492, <a href="https://commons.wikimedia.org/wiki/File:Chicken_cordon_bleu,_Bee%27s_Steak_and_Shake,_Sleman,_Yogyakarta.jpg" target="_blank" rel="noopener">CC BY-SA 4.0</a></li>
+        </ul>
+      </details>
+    </footer>
+  </div>
+</main>
+
+<button class="order-bar" id="order-bar" type="button" hidden>
+  <span class="order-bar__left"><span class="order-bar__count" id="order-count">0</span> platillos</span>
+  <span class="order-bar__right">Ver mi pedido</span>
+</button>
+
+<div class="scrim" id="scrim" hidden></div>
+
+<!-- Dish detail -->
+<section class="panel" id="detail" role="dialog" aria-modal="true" aria-labelledby="detail-name" hidden>
+  <div class="panel__grip" aria-hidden="true"></div>
+  <button class="panel__close" id="detail-close" type="button" aria-label="Cerrar">✕</button>
+
+  <div class="panel__body">
+    <div class="viewer">
+      <model-viewer id="mv"
+        camera-controls
+        auto-rotate
+        auto-rotate-delay="900"
+        rotation-per-second="18deg"
+        interaction-prompt="none"
+        shadow-intensity="1.1"
+        shadow-softness="0.9"
+        exposure="1.05"
+        environment-image="neutral"
+        ar
+        ar-modes="webxr scene-viewer quick-look"
+        ar-scale="fixed"
+        ar-placement="floor"
+        alt="">
+        <button class="ar-btn" slot="ar-button" type="button">Ver en tu mesa · tamaño real</button>
+        <div class="viewer__progress" slot="progress-bar"></div>
+      </model-viewer>
+      <p class="viewer__hint">Arrastra para girar · pellizca para acercar</p>
+      <p class="viewer__note" id="ar-note" hidden></p>
+      <p class="viewer__error" id="viewer-error" hidden>No se pudo cargar el modelo. <button type="button" id="retry" class="linkish">Reintentar</button></p>
+    </div>
+
+    <div class="detail-text">
+      <h3 class="detail-name" id="detail-name"></h3>
+      <p class="detail-price" id="detail-price"></p>
+      <p class="detail-desc" id="detail-desc"></p>
+    </div>
+  </div>
+
+  <div class="panel__foot">
+    <button class="btn btn--primary" id="add-btn" type="button"></button>
+  </div>
+</section>
+
+<!-- Order summary -->
+<section class="panel" id="order" role="dialog" aria-modal="true" aria-labelledby="order-title" hidden>
+  <div class="panel__grip" aria-hidden="true"></div>
+  <button class="panel__close" id="order-close" type="button" aria-label="Cerrar">✕</button>
+  <div class="panel__body">
+    <h3 class="detail-name" id="order-title">Mi pedido</h3>
+    <ul class="order-list" id="order-list"></ul>
+    <p class="order-empty" id="order-empty">Todavía no agregas nada.</p>
+    <div class="order-total" id="order-total" hidden><span>Total</span><span id="order-total-value"></span></div>
+    <p class="order-hint">Muéstrale esta pantalla a tu mesero para ordenar.</p>
+  </div>
+  <div class="panel__foot">
+    <button class="btn btn--ghost" id="order-clear" type="button">Vaciar</button>
+  </div>
+</section>
+
+<script src="app.js" defer></script>
+</body>
+</html>
