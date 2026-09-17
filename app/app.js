@@ -211,6 +211,22 @@ mv.addEventListener("error", () => {
   $("viewer-error").hidden = false;
 });
 
+// AR can fail after the session is handed off — without this the phone just sits
+// on a black screen with no idea what went wrong
+mv.addEventListener("ar-status", (event) => {
+  const note = $("ar-note");
+  const status = event.detail.status;
+  if (status === "failed") {
+    note.textContent =
+      "Tu teléfono no pudo abrir la cámara en AR. Suele ser porque falta " +
+      "«Servicios de Google Play para RA» o el navegador no tiene permiso de cámara. " +
+      "El platillo se sigue viendo en 3D aquí.";
+    note.hidden = false;
+  } else if (status === "session-started" || status === "object-placed") {
+    note.hidden = true;
+  }
+});
+
 $("retry").addEventListener("click", () => {
   if (!activeDish) return;
   $("viewer-error").hidden = true;

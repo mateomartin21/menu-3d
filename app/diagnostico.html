@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Diagnóstico AR · Menú Aleida</title>
+<meta name="robots" content="noindex">
+<style>
+  :root { color-scheme: light dark; }
+  body {
+    margin: 0; padding: 20px 16px 60px;
+    font: 15px/1.5 system-ui, sans-serif;
+    background: #fdfbf7; color: #17140f;
+  }
+  @media (prefers-color-scheme: dark) { body { background: #141210; color: #f6f1e8; } }
+  h1 { font-size: 1.2rem; margin: 0 0 4px; }
+  .sub { color: #8a8378; font-size: .85rem; margin: 0 0 18px; }
+  .row {
+    display: flex; gap: 10px; align-items: flex-start;
+    padding: 11px 0; border-bottom: 1px solid rgba(128,120,110,.22);
+  }
+  .row b { flex: 0 0 auto; width: 26px; font-size: 1.05rem; }
+  .k { font-weight: 600; }
+  .v { color: #6f6a62; word-break: break-word; }
+  @media (prefers-color-scheme: dark) { .v { color: #a9a49b; } }
+  .ok { color: #2f7d4f; } .bad { color: #a6293c; } .warn { color: #9a6b14; }
+  model-viewer { width: 100%; height: 260px; background: #fff; border-radius: 14px; margin-top: 18px; }
+  @media (prefers-color-scheme: dark) { model-viewer { background: #1c1916; } }
+  button {
+    font: inherit; margin-top: 16px; width: 100%; padding: 14px;
+    border: 0; border-radius: 12px; background: #17140f; color: #fdfbf7; font-weight: 600;
+  }
+  @media (prefers-color-scheme: dark) { button { background: #f6f1e8; color: #141210; } }
+  .verdict { margin-top: 20px; padding: 14px; border-radius: 12px; background: rgba(166,58,82,.1); font-size: .9rem; }
+</style>
+<script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@3.5.0/dist/model-viewer.min.js"></script>
+</head>
+<body>
+
+<h1>Diagnóstico de AR</h1>
+<p class="sub">Abre esta página en el celular que falla y mándanos una captura completa.</p>
+
+<div id="report"></div>
+
+<model-viewer id="mv" src="models/pancakes.glb" alt="Modelo de prueba"
+  camera-controls auto-rotate shadow-intensity="1.1" exposure="1.05" environment-image="neutral"
+  ar ar-modes="scene-viewer webxr quick-look" ar-scale="fixed"></model-viewer>
+<p class="sub" style="margin-top:8px">Si arriba no aparece un platillo 3D, el problema es el navegador, no el AR.</p>
+
+<button id="try-ar" type="button">Probar AR ahora</button>
+<div class="verdict" id="verdict" hidden></div>
+
+<script>
+const report = document.getElementById('report');
+const mv = document.getElementById('mv');
+
+function row(key, value, state) {
+  const icon = state === 'ok' ? '✅' : state === 'bad' ? '❌' : state === 'warn' ? '⚠️' : '•';
+  const el = document.createElement('div');
+  el.className = 'row';
+  el.innerHTML = `<b>${icon}</b><div><div class="k">${key}</div><div class="v"></div></div>`;
+  el.querySelector('.v').textContent = value;
+  report.append(el);
+}
+
+const ua = navigator.userAgent;
+const isAndroid = /Android/i.test(ua);
+const isIOS = /iPhone|iPad|iPod/i.test(ua);
+const inApp = /(FBAN|FBAV|Instagram|Line|WhatsApp|wv\))/i.test(ua);
+const chromeVersion = (ua.match(/Chrome\/(\d+)/) || [])[1];
+
+row('Navegador', inApp ? 'Navegador dentro de una app (Facebook/Instagram/WhatsApp)' :
+    chromeVersion ? `Chrome ${chromeVersion}` : 'Otro navegador', inApp ? 'bad' : chromeVersion ? 'ok' : 'warn');
+row('Sistema', isAndroid ? 'Android' : isIOS ? 'iOS' : 'Escritorio u otro', 'info');
+row('HTTPS (contexto seguro)', window.isSecureContext ? 'Sí' : 'No — la cámara no puede abrir',
+    window.isSecureContext ? 'ok' : 'bad');
+
+// WebGL: si esto falla, no hay 3D ni AR
+let gl = null, renderer = 'no disponible';
+try {
+  const canvas = document.createElement('canvas');
+  gl = canvas.getContext('webgl2') || canvas.getContext('webgl');
+  if (gl) {
+    const info = gl.getExtension('WEBGL_debug_renderer_info');
+    renderer = info ? gl.getParameter(info.UNMASKED_RENDERER_WEBGL) : 'activo (sin detalle)';
+  }
+} catch (e) { renderer = 'error: ' + e.message; }
+row('WebGL (motor 3D)', gl ? renderer : 'NO disponible — por eso no se ven los modelos', gl ? 'ok' : 'bad');
+
+// WebXR
+if (navigator.xr && navigator.xr.isSessionSupported) {
+  navigator.xr.isSessionSupported('immersive-ar').then((supported) => {
+    row('WebXR immersive-ar', supported ? 'Soportado' : 'No soportado', supported ? 'ok' : 'warn');
+  }).catch((e) => row('WebXR immersive-ar', 'Error: ' + e.message, 'warn'));
+} else {
+  row('WebXR immersive-ar', 'navigator.xr no existe (normal en iPhone)', isIOS ? 'info' : 'warn');
+}
+
+// permiso de cámara
+if (navigator.permissions && navigator.permissions.query) {
+  navigator.permissions.query({ name: 'camera' })
+    .then((p) => row('Permiso de cámara', p.state, p.state === 'granted' ? 'ok' : p.state === 'denied' ? 'bad' : 'warn'))
+    .catch(() => row('Permiso de cámara', 'no consultable en este navegador', 'info'));
+}
+
+row('Pantalla', `${window.innerWidth}×${window.innerHeight} @${window.devicePixelRatio}x`, 'info');
+row('User agent', ua, 'info');
+
+mv.addEventListener('load', () => {
+  const d = mv.getDimensions();
+  row('Modelo de prueba', `Cargó bien — ${(d.x*100).toFixed(0)}×${(d.z*100).toFixed(0)} cm`, 'ok');
+  setTimeout(() => {
+    row('Botón AR disponible', mv.canActivateAR ? 'Sí' : 'No', mv.canActivateAR ? 'ok' : 'bad');
+  }, 500);
+});
+mv.addEventListener('error', (e) => row('Modelo de prueba', 'FALLÓ al cargar: ' + (e.detail?.type || ''), 'bad'));
+
+mv.addEventListener('ar-status', (e) => {
+  const v = document.getElementById('verdict');
+  v.hidden = false;
+  v.textContent = 'Estado de AR: ' + e.detail.status +
+    (e.detail.status === 'failed' ? ' — el teléfono aceptó abrir AR pero no pudo mostrar la cámara. Casi siempre falta "Servicios de Google Play para RA" (ARCore) o el modelo de teléfono no está certificado por Google.' : '');
+});
+
+document.getElementById('try-ar').addEventListener('click', async () => {
+  const v = document.getElementById('verdict');
+  v.hidden = false;
+  if (!mv.canActivateAR) {
+    v.textContent = 'Este navegador no ofrece AR. Se puede ver el platillo en 3D, pero no colocarlo en la mesa.';
+    return;
+  }
+  try {
+    await mv.activateAR();
+    v.textContent = 'Sesión de AR solicitada. Si ves negro, el problema es ARCore o el permiso de cámara.';
+  } catch (err) {
+    v.textContent = 'No se pudo abrir AR: ' + err.message;
+  }
+});
+</script>
+</body>
+</html>
