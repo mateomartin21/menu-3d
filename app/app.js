@@ -4,19 +4,19 @@ const DISHES = [
   {
     id: "hot-cakes", course: 1, name: "Hot cakes", price: 70,
     desc: "3 piezas acompañados de fresas, blue berries, mantequilla y miel.",
-    model: "models/pancakes.glb",
+    model: "models/burger.glb",
     thumb: "img/dish-hotcakes.webp", realPhoto: true,
   },
   {
     id: "omelette-aleida", course: 1, name: "Omelette Aleida", price: 80,
     desc: "Queso de cabra, jamón serrano y espinacas.",
-    model: "models/egg-cooked.glb",
+    model: "models/taco.glb",
     thumb: "img/dish-omelette-aleida.webp", stockPhoto: true,
   },
   {
     id: "omelette", course: 1, name: "Omelette", price: 70,
     desc: "Queso mozzarella, tomates cherry y espinacas.",
-    model: "models/egg-half.glb",
+    model: "models/hotdog.glb",
     thumb: "img/dish-omelette.webp", stockPhoto: true,
   },
   {

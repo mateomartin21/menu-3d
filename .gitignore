@@ -19,3 +19,7 @@ desktop.ini
 # Herramientas locales
 .playwright-mcp/
 node_modules/
+
+# Modelos crudos de Meshy: pesan decenas de MB y no se sirven.
+# Lo que se versiona es tools/optimized/ (lo que realmente ships).
+tools/source-raw/

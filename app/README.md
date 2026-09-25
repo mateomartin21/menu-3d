@@ -72,14 +72,38 @@ su carta física real.
 
 ## Cambiar un modelo 3D
 
-Los modelos actuales son placeholders CC0 de [Kenney Food Kit](https://kenney.nl/assets/food-kit),
-elegidos por forma parecida — no son los platillos reales. Para sustituir uno por un
-render de Meshy:
+Los modelos viven en `app/models/`, ya escalados al tamaño real del platillo (en metros).
+Eso es lo que hace que el AR lo coloque a escala correcta sobre la mesa.
 
-1. Exporta el `.glb` desde Meshy.
-2. Déjalo en `menu-3d/tools/source/`.
-3. Agrega su escala real (en metros) al diccionario `SCALES` de `tools/build-models.py`
-   y corre `python tools/build-models.py`. Ese paso incrusta la textura y hornea el
-   tamaño real, que es lo que hace que el AR lo coloque a escala correcta.
-4. Apunta el platillo a ese archivo en `app.js`.
-5. Regenera su miniatura con `tools/poster-gen.html` (o usa una foto real del platillo).
+**1. Deja el archivo crudo.** Exporta el `.glb` desde Meshy y déjalo en `tools/source-raw/`
+(esa carpeta está fuera de git: los exports crudos pesan decenas de MB).
+
+**2. Optimízalo.** Un export de Meshy trae ~850 mil triángulos y pesa 20–30 MB. El menú
+tiene presupuesto de ~5 MB por platillo, así que hay que simplificar la malla y bajar la
+textura. Requiere Node:
+
+```bash
+cd menu-3d/tools
+npx @gltf-transform/cli@4 weld   source-raw/PLATILLO.glb /tmp/w.glb
+npx @gltf-transform/cli@4 simplify /tmp/w.glb /tmp/s.glb --ratio 0.06 --error 0.002
+npx @gltf-transform/cli@4 resize   /tmp/s.glb optimized/PLATILLO.glb --width 1024 --height 1024
+```
+
+Con esos valores la hamburguesa pasó de 28 MB a 2 MB **sin diferencia visible**. Si el
+modelo sale facetado, sube el `--ratio` (0.10, 0.15). Para ver cuánto pesa cada parte:
+`npx @gltf-transform/cli@4 inspect archivo.glb`.
+
+**3. Dale su tamaño real.** Abre `tools/build-models.py` y agrégalo al diccionario
+`SCALES` con la escala que lo lleva a metros. Para calcularla: mide el modelo con
+`mv.getDimensions()` (el lado más largo) y divide el tamaño real entre ese número.
+Los modelos de Meshy salen normalizados a ~2 unidades, así que un plato de 24 cm
+es `0.24 / 2.01 = 0.1192`.
+
+```bash
+cd menu-3d && python tools/build-models.py
+```
+
+El script toma de `optimized/` si el archivo existe ahí, si no de `source/`.
+
+**4. Conéctalo al platillo.** En `app.js`, cambia el `model:` del platillo
+correspondiente. Y si quieres, su `thumb:` por una foto real.
