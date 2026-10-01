@@ -114,10 +114,9 @@ button { font: inherit; color: inherit; cursor: pointer; }
 }
 
 .hero__logo {
-  width: clamp(140px, 34vw, 180px);
+  width: clamp(104px, 22vw, 136px);
   height: auto;
-  /* The Béjar badge is brown on a dark photo; a soft shadow keeps its edge readable. */
-  filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.45));
+  filter: invert(1);
   animation: rise-in 700ms var(--ease-out) both;
 }
 
