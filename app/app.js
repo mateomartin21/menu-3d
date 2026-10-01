@@ -8,12 +8,6 @@ const DISHES = [
     thumb: "img/dish-hotcakes.webp", realPhoto: true,
   },
   {
-    id: "omelette-aleida", course: 1, name: "Omelette Aleida", price: 80,
-    desc: "Queso de cabra, jamón serrano y espinacas.",
-    model: "models/taco.glb",
-    thumb: "img/dish-omelette-aleida.webp", stockPhoto: true,
-  },
-  {
     id: "omelette", course: 1, name: "Omelette", price: 70,
     desc: "Queso mozzarella, tomates cherry y espinacas.",
     model: "models/hotdog.glb",
